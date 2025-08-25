@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Artwork } from '../data/artworks';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
