@@ -1,4 +1,1 @@
-/// <reference types="react" />
-/// <reference types="framer-motion" />
-
-declare module 'react' 
+// (Intentionally left blank. Use only default types.)

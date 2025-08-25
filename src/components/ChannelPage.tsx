@@ -35,15 +35,16 @@ const categoryConfig = {
 const ChannelPage: React.FC<ChannelPageProps> = ({ 
   category, 
   onExit, 
+  selectedArtwork,
   onArtworkSelect 
-}) => {
+}: ChannelPageProps) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [showInfo, setShowInfo] = useState(false);
   const [spotlightPosition, setSpotlightPosition] = useState({ x: 50, y: 50 });
   const [curtainOpen, setCurtainOpen] = useState(false);
 
-  const config = categoryConfig[category];
+  const config = categoryConfig[category as keyof typeof categoryConfig];
 
   useEffect(() => {
     console.log(`Loading ${category} channel`);
@@ -73,17 +74,17 @@ const ChannelPage: React.FC<ChannelPageProps> = ({
     }
   }, [currentIndex, artworks, onArtworkSelect]);
 
-  const handlePrevious = () => {
+  const handlePrevious = (): void => {
     console.log('Previous artwork');
-    setCurrentIndex((prev) => (prev - 1 + artworks.length) % artworks.length);
+  setCurrentIndex((prev: number) => (prev - 1 + artworks.length) % artworks.length);
   };
 
-  const handleNext = () => {
+  const handleNext = (): void => {
     console.log('Next artwork');
-    setCurrentIndex((prev) => (prev + 1) % artworks.length);
+  setCurrentIndex((prev: number) => (prev + 1) % artworks.length);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     if (e.key === 'ArrowLeft') handlePrevious();
     if (e.key === 'ArrowRight') handleNext();
     if (e.key === 'Escape') onExit();
@@ -234,7 +235,7 @@ const ChannelPage: React.FC<ChannelPageProps> = ({
 
         {/* Artwork dots indicator */}
         <div className="flex space-x-2">
-          {artworks.map((_, index) => (
+          {artworks.map((_: any, index: number) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
@@ -263,7 +264,7 @@ const ChannelPage: React.FC<ChannelPageProps> = ({
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              onClick={((e: React.MouseEvent<HTMLDivElement>) => { e.stopPropagation(); }) as any}
             >
               <h3 className="text-3xl font-deco text-noir-amber mb-2">{currentArtwork.title}</h3>
               <p className="text-xl text-noir-silver font-noir mb-1">by {currentArtwork.artist}</p>
@@ -288,7 +289,7 @@ interface PerformingArtsCurtainProps {
   isOpen: boolean;
 }
 
-const PerformingArtsCurtain: React.FC<PerformingArtsCurtainProps> = ({ isOpen }) => {
+const PerformingArtsCurtain: React.FC<PerformingArtsCurtainProps> = ({ isOpen }: PerformingArtsCurtainProps) => {
   return (
     <AnimatePresence>
       {!isOpen && (

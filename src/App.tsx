@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import WelcomePage from './components/WelcomePage';
 import GalleryHub from './components/GalleryHub';
@@ -16,18 +16,18 @@ interface AppState {
 
 function App() {
   const [appState, setAppState] = useState<AppState>({
-    currentPage: 'welcome',
+    currentPage: 'welcome' as Page,
     userName: '',
     isTransitioning: false,
     selectedArtwork: null
   });
 
-  const handlePageTransition = (page: Page, data?: any) => {
+  const handlePageTransition = (page: Page, data?: { userName?: string }) => {
     console.log(`Transitioning to page: ${page}`, data);
-    setAppState(prev => ({ ...prev, isTransitioning: true }));
+  setAppState((prev: AppState) => ({ ...prev, isTransitioning: true }));
     
     setTimeout(() => {
-      setAppState(prev => ({
+      setAppState((prev: AppState) => ({
         ...prev,
         currentPage: page,
         isTransitioning: false,
@@ -38,7 +38,7 @@ function App() {
 
   const handleArtworkSelect = (artwork: Artwork | null) => {
     console.log('Selected artwork:', artwork);
-    setAppState(prev => ({ ...prev, selectedArtwork: artwork }));
+  setAppState((prev: AppState) => ({ ...prev, selectedArtwork: artwork }));
   };
 
   const renderCurrentPage = () => {
@@ -46,14 +46,14 @@ function App() {
       case 'welcome':
         return (
           <WelcomePage
-            onEnterGallery={(userName) => handlePageTransition('hub', { userName })}
+            onEnterGallery={(userName: string) => handlePageTransition('hub', { userName })}
           />
         );
       case 'hub':
         return (
           <GalleryHub
             userName={appState.userName}
-            onChannelSelect={(channel) => handlePageTransition(channel)}
+            onChannelSelect={(channel: Page) => handlePageTransition(channel)}
             onExit={() => handlePageTransition('welcome')}
           />
         );
