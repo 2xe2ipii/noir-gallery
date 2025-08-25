@@ -179,11 +179,11 @@ const Door: React.FC<DoorProps> = ({ isDoorOpening }) => {
         transition={{ duration: 2, ease: "easeInOut" }}
         style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Door panels */}
+        {/* panel */}
         <div className="absolute inset-4 border-2 border-noir-amber/30 rounded"></div>
         <div className="absolute inset-8 border border-noir-amber/20 rounded"></div>
         
-        {/* Door handle */}
+        {/* hawakan */}
         <motion.div
           className="absolute right-6 top-1/2 w-4 h-8 bg-noir-amber rounded-full shadow-lg"
           animate={isDoorOpening ? { rotate: -90 } : {}}

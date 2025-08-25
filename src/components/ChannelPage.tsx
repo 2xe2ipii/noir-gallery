@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ChevronLeft, ChevronRight, Info, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Info, RotateCcw } from 'lucide-react';  
 import { getArtworksByCategory, Artwork } from '../data/artworks';
 import ArtworkCard from './ArtworkCard';
 
@@ -108,6 +108,18 @@ const ChannelPage: React.FC<ChannelPageProps> = ({
       onKeyDown={handleKeyPress}
       tabIndex={0}
     >
+      {/* Noir background for graphics channel */}
+      {category === 'graphics' && (
+        <div 
+          className="absolute inset-0 bg-center opacity-40"
+          style={{ 
+            backgroundImage: 'url(/assets/images/graphic_arts/ga_bg.png)',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'repeat'
+          }}
+        />
+      )}
+
       {/* Background effects */}
       <div className="absolute inset-0 film-grain"></div>
       
@@ -115,9 +127,9 @@ const ChannelPage: React.FC<ChannelPageProps> = ({
       <motion.div
         className="absolute inset-0 opacity-40"
         style={{
-          background: `radial-gradient(circle at ${spotlightPosition.x}% ${spotlightPosition.y}%, ${config.spotlightColor} 0%, transparent 50%)`
+          background: `radial-gradient(circle at ${spotlightPosition.x}% ${spotlightPosition.y}%, ${config.spotlightColor} 0%, transparent 60%)`
         }}
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        animate={{ opacity: [0.3, 0.7, 0.3] }}
         transition={{ duration: 4, repeat: Infinity }}
       />
 
@@ -155,35 +167,35 @@ const ChannelPage: React.FC<ChannelPageProps> = ({
       </motion.div>
 
       {/* Main content area */}
-      <div className="flex items-center justify-center min-h-screen pt-20 pb-32">
-        <div className="relative w-full max-w-6xl px-8">
+      <div className="flex items-center justify-center min-h-screen py-20">
+        <div className="relative w-full px-16">
           
           {/* Navigation arrows */}
           <button
             onClick={handlePrevious}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-30 btn-noir p-4 rounded-full group"
+            className="fixed left-8 top-1/2 transform -translate-y-1/2 z-30 btn-noir p-8 rounded-full group hover:bg-noir-amber/10"
             disabled={artworks.length <= 1}
           >
-            <ChevronLeft className="w-8 h-8 text-noir-amber group-hover:-translate-x-1 transition-transform duration-300" />
+            <ChevronLeft className="w-12 h-12 text-noir-amber group-hover:-translate-x-1 transition-transform duration-300" />
           </button>
 
           <button
             onClick={handleNext}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-30 btn-noir p-4 rounded-full group"
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-30 btn-noir p-8 rounded-full group hover:bg-noir-amber/10"
             disabled={artworks.length <= 1}
           >
-            <ChevronRight className="w-8 h-8 text-noir-amber group-hover:translate-x-1 transition-transform duration-300" />
+            <ChevronRight className="w-12 h-12 text-noir-amber group-hover:translate-x-1 transition-transform duration-300" />
           </button>
 
           {/* Artwork display */}
           <AnimatePresence mode="wait">
             <motion.div
               key={currentArtwork.id}
-              className="flex flex-col lg:flex-row items-center justify-center gap-12"
-              initial={{ opacity: 0, scale: 0.9 }}
+              className="flex flex-col lg:flex-row items-center justify-center gap-16"
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.1 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
             >
               <ArtworkCard 
                 artwork={currentArtwork} 

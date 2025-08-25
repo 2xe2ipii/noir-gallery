@@ -13,86 +13,118 @@ export const artworks: Artwork[] = [
   // Graphics Arts
   {
     id: 'graphics-1',
-    title: 'The Persistence of Memory',
-    artist: 'Salvador Dalí',
-    year: '1931',
-    description: 'A surrealist masterpiece featuring melting clocks in a dreamlike landscape, challenging our perception of time and reality.',
+    title: 'Nighthawks',
+    artist: 'Edward Hopper',
+    year: '1942',
+    description: 'A late-night scene at a downtown diner, capturing the isolation and mystery of urban life.',
     category: 'graphics',
-    imageUrl: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&h=600&fit=crop',
+    imageUrl: './assets/images/graphic_arts/VA_1_Nighthaws_Hopper.jpg',
     type: 'image'
   },
   {
     id: 'graphics-2',
-    title: 'The Starry Night',
-    artist: 'Vincent van Gogh',
-    year: '1889',
-    description: 'An iconic post-impressionist painting depicting a swirling night sky over a quiet town, painted during van Gogh\'s stay at an asylum.',
+    title: 'The Maltese Falcon',
+    artist: 'Warner Bros',
+    year: '1941',
+    description: 'Iconic film noir poster featuring Humphrey Bogart, capturing the essence of detective fiction.',
     category: 'graphics',
-    imageUrl: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=800&h=600&fit=crop',
+    imageUrl: './assets/images/graphic_arts/VA_2_The Maltese Falcon_WarnerBros.jpg',
     type: 'image'
   },
   {
     id: 'graphics-3',
-    title: 'Girl with a Pearl Earring',
-    artist: 'Johannes Vermeer',
-    year: '1665',
-    description: 'A mysterious portrait of a girl wearing an exotic dress and a large pearl earring, known as the "Mona Lisa of the North".',
+    title: 'Self-Portrait with Cigarette',
+    artist: 'Edward Munch',
+    year: '1895',
+    description: 'A haunting self-portrait emerging from shadows, reflecting the artist\'s inner turmoil.',
     category: 'graphics',
-    imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop',
+    imageUrl: './assets/images/graphic_arts/VA_3_Self-Portrait with Cigarette_EdwardMunch.jpg',
     type: 'image'
   },
   {
     id: 'graphics-4',
-    title: 'The Great Wave off Kanagawa',
-    artist: 'Katsushika Hokusai',
-    year: '1831',
-    description: 'A famous Japanese woodblock print depicting a giant wave threatening boats near Mount Fuji, representing the power of nature.',
+    title: 'Noir City Poster Series',
+    artist: 'Various Artists',
+    year: '1940-1950',
+    description: 'A collection of classic film noir posters showcasing the genre\'s distinctive visual style.',
     category: 'graphics',
-    imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc90?w=800&h=600&fit=crop',
+    imageUrl: './assets/images/graphic_arts/VA_4_Noir City Poster Series_Various.jpg',
+    type: 'image'
+  },
+  {
+    id: 'graphics-5',
+    title: 'Sin City',
+    artist: 'Frank Miller',
+    year: '1991',
+    description: 'Groundbreaking noir comic art featuring stark black and white contrasts with selective coloring.',
+    category: 'graphics',
+    imageUrl: './assets/images/graphic_arts/VA_5_SinCity_FrankMiller.jpg',
     type: 'image'
   },
 
   // Plastic Arts (Sculptures)
   {
     id: 'plastic-1',
-    title: 'David',
-    artist: 'Michelangelo',
-    year: '1504',
-    description: 'A Renaissance masterpiece depicting the biblical hero David before his battle with Goliath, symbolizing strength and youthful beauty.',
+    title: 'The Thinker',
+    artist: 'Auguste Rodin',
+    year: '1902',
+    description: 'A brooding figure lost in contemplation, embodying philosophical reflection and inner turmoil.',
     category: 'plastic',
-    imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc91?w=800&h=600&fit=crop',
+    imageUrl: './assets/images/plastic_arts/PA1_TheThinker_AugusteRodin.jpg',
     type: '3d'
   },
   {
     id: 'plastic-2',
-    title: 'The Thinker',
-    artist: 'Auguste Rodin',
-    year: '1902',
-    description: 'A bronze sculpture depicting a man in deep contemplation, originally part of a larger work called "The Gates of Hell".',
+    title: 'Metropolis Architectural Models',
+    artist: 'Fritz Lang',
+    year: '1927',
+    description: 'The iconic architectural models from the groundbreaking film Metropolis, showcasing Art Deco noir style.',
     category: 'plastic',
-    imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc92?w=800&h=600&fit=crop',
+    imageUrl: './assets/images/plastic_arts/PA2_MetropolisArchiModels_FritzLang.jpg',
     type: '3d'
   },
   {
     id: 'plastic-3',
-    title: 'Venus de Milo',
-    artist: 'Alexandros of Antioch',
-    year: '130-100 BCE',
-    description: 'An ancient Greek sculpture believed to depict Aphrodite, the goddess of love and beauty, renowned for its graceful form.',
+    title: 'The Shade',
+    artist: 'Auguste Rodin',
+    year: '1880',
+    description: 'A haunting figure representing the souls of the damned, originally part of The Gates of Hell. Experience this masterpiece in full 3D.',
     category: 'plastic',
-    imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc93?w=800&h=600&fit=crop',
+    imageUrl: '/assets/images/plastic_arts/the_shade.stl',
+    type: '3d'
+  },
+
+  // More Plastic Arts
+  {
+    id: 'plastic-4',
+    title: 'Angel of Grief',
+    artist: 'William Wetmore Story',
+    year: '1894',
+    description: 'A powerful expression of sorrow and mourning, depicting a weeping angel draped over an altar.',
+    category: 'plastic',
+    imageUrl: './assets/images/plastic_arts/PA4_AngelOfGrief_WilliamWetmore.jpg',
+    type: '3d'
+  },
+  {
+    id: 'plastic-5',
+    title: 'Man with a Trench Coat',
+    artist: 'George Segal',
+    year: '1960',
+    description: 'A life-size plaster figure embodying the mysterious noir detective archetype.',
+    category: 'plastic',
+    imageUrl: './assets/images/plastic_arts/PA5_ManWithATrenchCoat_GeorgeSegal.jpg',
     type: '3d'
   },
 
   // Performing Arts
   {
     id: 'performing-1',
-    title: 'Swan Lake',
-    artist: 'Pyotr Ilyich Tchaikovsky',
-    year: '1876',
-    description: 'A ballet in four acts featuring the story of Odette, a princess transformed into a swan by an evil sorcerer\'s curse.',
+    title: 'Double Indemnity',
+    artist: 'Billy Wilder',
+    year: '1944',
+    description: 'A quintessential film noir about insurance fraud and murder, featuring masterful chiaroscuro lighting.',
     category: 'performing',
-    imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc94?w=800&h=600&fit=crop',
+    imageUrl: './assets/images/graphic_arts/VA_2_The Maltese Falcon_WarnerBros.jpg',
     type: 'video'
   },
   {

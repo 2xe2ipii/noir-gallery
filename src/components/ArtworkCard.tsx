@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
+import type { Artwork } from '../data/artworks';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
-import { Artwork } from '../data/artworks';
+import type { ArtworkCardProps } from '../types/components';
+import { SculptureViewer } from './SculptureViewer';
 
-interface ArtworkCardProps {
-  artwork: Artwork;
-  category: 'graphics' | 'plastic' | 'performing';
-  isActive: boolean;
-}
-
-const ArtworkCard: React.FC<ArtworkCardProps> = ({ artwork, category, isActive }) => {
-  const [isRotating, setIsRotating] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+const ArtworkCard = ({ artwork, category, isActive }: ArtworkCardProps) => {
+  const [isRotating, setIsRotating] = React.useState(false);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [isMuted, setIsMuted] = React.useState(true);
 
   console.log('Rendering artwork:', artwork.title, 'Category:', category);
 
@@ -132,20 +128,20 @@ interface GraphicsDisplayProps {
   isActive: boolean;
 }
 
-const GraphicsDisplay: React.FC<GraphicsDisplayProps> = ({ artwork, isActive }) => {
+const GraphicsDisplay = ({ artwork, isActive }: GraphicsDisplayProps) => {
   return (
     <motion.div
-      className="relative"
+      className="relative flex items-center justify-center"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8 }}
     >
       {/* Gallery wall */}
-      <div className="relative w-96 h-96 bg-gradient-to-b from-noir-charcoal/20 to-noir-black/40 rounded-lg p-8">
+      <div className="relative bg-gradient-to-b from-noir-charcoal/20 to-noir-black/40 rounded-lg p-10 flex items-center justify-center">
         
         {/* Spotlight beam */}
         <motion.div
-          className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-gradient-spotlight opacity-60 rounded-full blur-xl"
+          className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-48 h-48 bg-gradient-spotlight opacity-60 rounded-full blur-2xl"
           animate={isActive ? { 
             scale: [1, 1.2, 1],
             opacity: [0.4, 0.8, 0.4]
@@ -155,29 +151,55 @@ const GraphicsDisplay: React.FC<GraphicsDisplayProps> = ({ artwork, isActive }) 
 
         {/* Picture frame */}
         <motion.div
-          className="relative w-full h-full bg-noir-charcoal rounded border-8 border-noir-amber/80 shadow-2xl overflow-hidden"
-          whileHover={{ scale: 1.02 }}
-          transition={{ duration: 0.3 }}
+          className="relative bg-noir-charcoal rounded-lg border-[12px] border-noir-amber/80 shadow-2xl cursor-pointer group inline-block"
+          whileHover={{ scale: 1.03 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          {/* Artwork image */}
-          <div 
-            className="w-full h-full bg-cover bg-center filter sepia-[30%] contrast-110 brightness-90"
-            style={{ backgroundImage: `url(${artwork.imageUrl})` }}
+          {/* Artwork image - Using img tag to preserve aspect ratio */}
+          <img 
+            src={artwork.imageUrl}
+            alt={`${artwork.title} by ${artwork.artist}`}
+            className="max-w-[80vw] max-h-[70vh] w-auto h-auto object-contain filter sepia-[20%] contrast-125 brightness-95 transition-all duration-700 ease-in-out group-hover:sepia-0"
           />
           
           {/* Glass reflection */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-500 pointer-events-none"></div>
           
-          {/* Frame inner shadow */}
-          <div className="absolute inset-0 shadow-inner border border-noir-amber/20"></div>
+          {/* Frame inner shadow and shine */}
+          <div className="absolute inset-0 shadow-inner border-2 border-noir-amber/30 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          </div>
+
+          {/* Interaction hint */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+          >
+            <div className="bg-noir-black/60 backdrop-blur-sm px-6 py-3 rounded-full">
+              <span className="text-noir-amber font-deco text-lg">VIEW DETAILS</span>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Gallery lighting effect */}
         <div className="absolute -inset-4 bg-gradient-radial from-noir-amber/10 via-transparent to-transparent rounded-full -z-10"></div>
       </div>
 
-      {/* Wall texture */}
-      <div className="absolute -inset-8 bg-gradient-to-b from-noir-charcoal/10 to-transparent rounded-lg -z-20"></div>
+      {/* Wall texture and ambient lighting */}
+      <div className="absolute -inset-12 bg-gradient-to-b from-noir-charcoal/10 to-transparent rounded-lg -z-20">
+        <div className="absolute inset-0 bg-gradient-radial from-noir-amber/5 via-transparent to-transparent mix-blend-overlay"></div>
+      </div>
+      
+      {/* Dramatic side lighting */}
+      <motion.div
+        className="absolute -left-8 top-1/2 transform -translate-y-1/2 w-24 h-96 bg-gradient-to-r from-noir-amber/10 to-transparent blur-2xl -z-10"
+        animate={isActive ? {
+          opacity: [0.3, 0.6, 0.3],
+          rotate: [-5, 5, -5]
+        } : {}}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
     </motion.div>
   );
 };
@@ -189,7 +211,10 @@ interface PlasticDisplayProps {
   onRotateToggle: () => void;
 }
 
-const PlasticDisplay: React.FC<PlasticDisplayProps> = ({ artwork, isActive, isRotating }) => {
+const PlasticDisplay = ({ artwork, isActive, isRotating, onRotateToggle }: PlasticDisplayProps) => {
+  // Check if the artwork has a 3D model
+  const is3DModel = artwork.type === '3d' && artwork.imageUrl.endsWith('.stl');
+
   return (
     <motion.div
       className="relative"
@@ -197,51 +222,65 @@ const PlasticDisplay: React.FC<PlasticDisplayProps> = ({ artwork, isActive, isRo
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Pedestal base */}
-      <div className="relative w-80 h-96">
+      {/* Display area with spotlight effect */}
+      <div className="relative w-[900px] h-[700px] bg-gradient-to-b from-noir-charcoal/20 to-noir-black/40 p-8 rounded-lg">
         {/* Marble pedestal */}
-        <div className="absolute bottom-0 w-full h-24 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 rounded-lg shadow-2xl">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl h-24 bg-gradient-to-t from-gray-300 via-gray-200 to-gray-100 rounded-lg shadow-2xl">
           <div className="absolute inset-2 bg-gradient-to-t from-gray-200 to-white rounded border-2 border-gray-300"></div>
           {/* Pedestal plaque */}
-          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-noir-amber rounded text-xs font-deco text-noir-black flex items-center justify-center">
+          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-48 h-8 bg-noir-amber rounded text-sm font-deco text-noir-black flex items-center justify-center">
             {artwork.artist}
           </div>
         </div>
 
-        {/* Sculpture */}
+        {/* Sculpture display */}
+        <div className="absolute inset-8 bottom-24">
+          {is3DModel ? (
+            // 3D Model Viewer
+            <div className="w-full h-full">
+              <SculptureViewer
+                modelUrl={artwork.imageUrl}
+                isRotating={isRotating}
+                onRotateToggle={onRotateToggle}
+              />
+            </div>
+          ) : (
+            // Image Display with rotation effect
+            <motion.div
+              className="w-full h-full flex items-center justify-center"
+              animate={isRotating ? { rotateY: 360 } : {}}
+              transition={isRotating ? { duration: 8, repeat: Infinity, ease: "linear" } : {}}
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="relative max-w-full max-h-full">
+                <img 
+                  src={artwork.imageUrl}
+                  alt={`${artwork.title} by ${artwork.artist}`}
+                  className="max-w-full max-h-[500px] w-auto h-auto object-contain filter grayscale contrast-125 shadow-2xl"
+                  style={{ transform: 'perspective(1000px) rotateX(5deg)' }}
+                />
+                
+                {/* Dramatic lighting effect */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-noir-amber/10 via-transparent to-noir-amber/5 mix-blend-overlay pointer-events-none"></div>
+              </div>
+            </motion.div>
+          )}
+        </div>
+        
+        {/* Dramatic spotlight effect */}
         <motion.div
-          className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-64 h-64"
-          animate={isRotating ? { rotateY: 360 } : {}}
-          transition={isRotating ? { duration: 8, repeat: Infinity, ease: "linear" } : {}}
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <div 
-            className="w-full h-full bg-cover bg-center rounded-lg shadow-2xl filter grayscale contrast-125"
-            style={{ 
-              backgroundImage: `url(${artwork.imageUrl})`,
-              transform: 'perspective(500px) rotateX(5deg)'
-            }}
-          />
-          
-          {/* 3D depth illusion */}
-          <div 
-            className="absolute inset-0 bg-gradient-to-r from-noir-black/40 via-transparent to-noir-black/20 rounded-lg"
-            style={{ transform: 'translateZ(-10px)' }}
-          />
-        </motion.div>
-
-        {/* Dramatic lighting */}
-        <motion.div
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-gradient-spotlight opacity-50 rounded-full blur-2xl"
-          animate={isActive ? { 
-            x: [-20, 20, -20],
-            opacity: [0.3, 0.7, 0.3]
+          className="absolute -top-20 left-1/2 transform -translate-x-1/2 w-96 h-96 opacity-30 pointer-events-none"
+          animate={isActive ? {
+            opacity: [0.2, 0.4, 0.2],
+            scale: [1, 1.2, 1]
           } : {}}
           transition={{ duration: 4, repeat: Infinity }}
-        />
+        >
+          <div className="w-full h-full bg-gradient-radial from-noir-amber/40 via-transparent to-transparent blur-2xl"></div>
+        </motion.div>
 
-        {/* Shadow */}
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-72 h-4 bg-noir-black/60 rounded-full blur-sm"></div>
+        {/* Enhanced shadow */}
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-3xl h-6 bg-gradient-to-t from-noir-black/60 to-transparent rounded-full blur-lg"></div>
       </div>
     </motion.div>
   );
@@ -256,12 +295,14 @@ interface PerformingDisplayProps {
   onMuteToggle: () => void;
 }
 
-const PerformingDisplay: React.FC<PerformingDisplayProps> = ({ 
+const PerformingDisplay = ({ 
   artwork, 
+  isActive,
   isPlaying, 
   isMuted, 
-  onPlayToggle 
-}) => {
+  onPlayToggle,
+  onMuteToggle
+}: PerformingDisplayProps) => {
   return (
     <motion.div
       className="relative"
